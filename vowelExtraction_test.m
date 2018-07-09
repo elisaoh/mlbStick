@@ -1,9 +1,10 @@
-function voiced_segment = vowelExtraction(data,Fs)
+load mtlb;
+data = mtlb;
 %% Spectrogram
 segmentlen = 100; %window size
-noverlap = 0.9*segmentlen; %overlapping size
+noverlap = 90; %overlapping size
 NFFT = 128; %sampling points for DFT
-% 
+
 spectrogram(data,segmentlen,noverlap,NFFT,Fs,'yaxis')
 title('Signal Spectrogram')
 
@@ -41,12 +42,12 @@ long_RMS(2:frame_no) = long_RMS_prev + long_RMS_curr;
 %     long_RMS(i)= sqrt(mean(sq(head:tail))); 
 % end
 % 
-% figure;
-% time_line = (1:frame_no).*frame_len*1e3*dt;
-% plot(time_line,long_RMS) 
-% xlabel("Time(ms)")
-% ylabel("RMS")
-% title(['Frame len: ',num2str(frame_len),' Lambda: ',num2str(lambda)])
+figure;
+time_line = (1:frame_no).*frame_len*1e3*dt;
+plot(time_line,long_RMS) 
+xlabel("Time(ms)")
+ylabel("RMS")
+title(['Frame len: ',num2str(frame_len),' Lambda: ',num2str(lambda)])
 
 %% thresholding
 thres = 1;
@@ -82,4 +83,3 @@ diff(2:end) = vowel_frame(2:end)-vowel_frame(1:end-1);
 voiced_head = (find(diff==1)-1)*frame_len;
 voiced_tail = (find(diff==-1)-1)*frame_len;
 voiced_segment = [voiced_head,voiced_tail];
-end
