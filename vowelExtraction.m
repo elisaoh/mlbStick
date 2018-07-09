@@ -66,20 +66,43 @@ for i = 1:frame_no
 end
      
 
+% figure;
+% time_line = (1:frame_no).*frame_len*1e3*dt;
+% plot(time_line,vowel_frame);
+% axis([0 inf 0 1.5]);
+% yticks([0 1]);
+% yticklabels({'not vowel','vowel'});
+% xlabel("Time(ms)")
+% title("Vowel Detection")
+
+%% return voiced sample range
+% we do not know how many voiced segments our record has
+min_length = ceil(0.125*Fs);
+diff = zeros(frame_no,1);
+diff(2:end) = vowel_frame(2:end)-vowel_frame(1:end-1);
+voiced_head = (find(diff==1)-1)*frame_len;
+voiced_tail = (find(diff==-1)-1)*frame_len;
+if length(voiced_tail)<length(voiced_head)
+    voiced_tail = [voiced_tail;length(data)];
+end
+
+voiced_segment = [voiced_head,voiced_tail];
+voiced_length = voiced_tail-voiced_head;
+voiced_segment(voiced_length < min_length,:)=[];
+voiced_logic = zeros(length(data),1);
+for i=1:size(voiced_segment,1)
+    head = voiced_segment(i,1);
+    tail = voiced_segment(i,2);
+    voiced_logic(head:tail) = 1;
+end
+
+
 figure;
-time_line = (1:frame_no).*frame_len*1e3*dt;
-plot(time_line,vowel_frame);
+time_line = (1:length(data)).*1e3*dt;
+plot(time_line,voiced_logic);
 axis([0 inf 0 1.5]);
 yticks([0 1]);
 yticklabels({'not vowel','vowel'});
 xlabel("Time(ms)")
 title("Vowel Detection")
-
-%% return voiced sample range
-% we do not know how many voiced segments our record has
-diff = zeros(frame_no,1);
-diff(2:end) = vowel_frame(2:end)-vowel_frame(1:end-1);
-voiced_head = (find(diff==1)-1)*frame_len;
-voiced_tail = (find(diff==-1)-1)*frame_len;
-voiced_segment = [voiced_head,voiced_tail];
 end
