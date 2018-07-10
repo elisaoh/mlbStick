@@ -47,7 +47,7 @@ for kk = 1:length(frqs)
     end
 end
 
-
+formants
 
 
 

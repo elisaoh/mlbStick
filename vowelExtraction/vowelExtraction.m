@@ -1,4 +1,4 @@
-function [voiced_segment,voiced_logic] = vowelExtraction(data,Fs)
+function [voiced_segment,voiced_logic] = vowelExtraction(data,Fs,frame_len)
 %% parameters
 min_duration = 0.1;
 
@@ -18,7 +18,7 @@ title('Signal Spectrogram')
 %frame method (no smoothing)
 lambda = 0.4; %smoothing factor
 dt = 1/Fs;
-frame_len = 100;
+% frame_len = 100;
 % frame_no = length(data)-window_len; %window or frame?
 frame_no = ceil(length(data)/frame_len);
 long_RMS = zeros(frame_no,1);
