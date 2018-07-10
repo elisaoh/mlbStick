@@ -1,9 +1,11 @@
 clear variables
 addpath('vowelExtraction')
 load mtlb
+F0 = 233.27;
+window_len = 2/F0*Fs;
 data = mtlb;
 frame_len = 100; % for vowel detection
-half_window = 200; % window size for LPC analysis
+half_window = round(window_len/2); % window size for LPC analysis
 p = 8; % LPC order
 
 [voiced_segment,~] = vowelExtraction(data,Fs,frame_len);
