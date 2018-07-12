@@ -4,12 +4,12 @@ addpath('vowelExtraction')
 load('\\wcs-cifs\wc\smng\experiments\stroopVOT\acousticdata\sp008\neutralWord\data.mat')
 load('\\wcs-cifs\wc\smng\experiments\stroopVOT\acousticdata\sp008\neutralWord\expt.mat')
 
-idx = 1;
+idx = 2;
 word = expt.words(expt.allWords(idx));
 M = 4; %downsample factor
 y = downsample(data(idx).signalIn,M);
 Fs = data(idx).params.fs/M;
-F0 = 170/2; %Pitch period(Fundamental frequency)
+F0 = 170/4; %Pitch period(Fundamental frequency)
 window_len = 2/F0*Fs;
 
 frame_len = 100; % for vowel detection
@@ -58,6 +58,7 @@ noverlap = 90; %overlapping size
 NFFT = 128; %sampling points for DFT
 
 spectrogram(y,segmentlen,noverlap,NFFT,Fs,'yaxis')
+colormap("")
 hold on
 formants_no = 3;
 for f = 1:formants_no
@@ -70,8 +71,8 @@ for f = 1:formants_no
 end
 hold off
 % suptitle(['Window length ', num2str(half_window*2+1),' LPC order ', num2str(p)]);
-title(['Window ', num2str(half_window*2+1),' Order ', num2str(p)]);
-text(1.5,5,word,'Color','white','FontSize',14)
+% title(['Window ', num2str(half_window*2+1),' Order ', num2str(p),' Word', word]);
+title(word)
 
 
 

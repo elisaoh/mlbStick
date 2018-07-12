@@ -3,13 +3,13 @@ function [voiced_segment,voiced_logic] = vowelExtraction(data,Fs,frame_len)
 min_duration = 0.1;
 
 %% Spectrogram
-segmentlen = 100; %window size
-noverlap = 0.9*segmentlen; %overlapping size
-NFFT = 128; %sampling points for DFT
-%
-figure;
-spectrogram(data,segmentlen,noverlap,NFFT,Fs,'yaxis')
-title('Signal Spectrogram')
+% segmentlen = 100; %window size
+% noverlap = 0.9*segmentlen; %overlapping size
+% NFFT = 128; %sampling points for DFT
+% %
+% figure;
+% spectrogram(data,segmentlen,noverlap,NFFT,Fs,'yaxis')
+% title('Signal Spectrogram')
 
 %% Long-Time RMS 
 % Calculate the power in a given current window, 
@@ -101,12 +101,12 @@ for i=1:size(voiced_segment,1)
 end
 
 
-figure;
-time_line = (1:length(data)).*1e3*dt;
-plot(time_line,voiced_logic);
-axis([0 inf 0 1.5]);
-yticks([0 1]);
-yticklabels({'not vowel','vowel'});
-xlabel("Time(ms)")
-title("Vowel Detection")
+% figure;
+% time_line = (1:length(data)).*1e3*dt;
+% plot(time_line,voiced_logic);
+% axis([0 inf 0 1.5]);
+% yticks([0 1]);
+% yticklabels({'not vowel','vowel'});
+% xlabel("Time(ms)")
+% title("Vowel Detection")
 end

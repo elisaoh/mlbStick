@@ -1,11 +1,11 @@
 data = y;
 %% Spectrogram
-segmentlen = 100; %window size
-noverlap = 90; %overlapping size
-NFFT = 128; %sampling points for DFT
-
-spectrogram(data,segmentlen,noverlap,NFFT,Fs,'yaxis')
-title('Signal Spectrogram')
+% segmentlen = 100; %window size
+% noverlap = 90; %overlapping size
+% NFFT = 128; %sampling points for DFT
+% 
+% spectrogram(data,segmentlen,noverlap,NFFT,Fs,'yaxis')
+% title('Signal Spectrogram')
 
 %% Long-Time RMS 
 % Calculate the power in a given current window, 

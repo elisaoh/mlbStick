@@ -1,17 +1,17 @@
 clear variables
-
-recObj = audiorecorder;
-disp('Start speaking.');
-recordblocking(recObj, 5);
-disp('End of Recording.');
-Fs = recObj.SampleRate;
-y = getaudiodata(recObj);
-figure;
-plot(y);
+% 
+% recObj = audiorecorder;
+% disp('Start speaking.');
+% recordblocking(recObj, 5);
+% disp('End of Recording.');
+% Fs = recObj.SampleRate;
+% y = getaudiodata(recObj);
+% figure;
+% plot(y);
 
 %% for test
-% load mtlb
-% y = mtlb;
+load mtlb
+y = mtlb;
 
 %%
 voiced = vowelExtraction(y,Fs,100);
