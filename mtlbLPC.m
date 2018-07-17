@@ -9,25 +9,27 @@ word = expt.words(expt.allWords(idx));
 M = 4; %downsample factor
 y = downsample(data(idx).signalIn,M);
 Fs = data(idx).params.fs/M;
-F0 = 170/2; %Pitch period(Fundamental frequency)
+F0 = 162; %Pitch period(Fundamental frequency)
 window_len = 2/F0*Fs;
 
 frame_len = 100; % for vowel detection
 half_window = round(window_len/2); % window size for LPC analysis
-p = 8; % LPC order
+p = 10; % LPC order
 
 [voiced_segment,~] = vowelExtraction(y,Fs,frame_len);
 dt = 1/Fs;
 % takes in a segment of vowel, return its formants
 sample_no = length(y);
 voiced_no = size(voiced_segment,1);
-formants_all = zeros(sample_no,3);
+formants_all = zeros(sample_no,4);
 
 
-
+fn = zeros(length(y),3);
+m = 0.5;
 
 for seg = 1:voiced_no
-I0 = voiced_segment(seg,1)+half_window;
+    I0 = 9000;
+% I0 = voiced_segment(seg,1)+half_window;
 Iend = voiced_segment(seg,2)-half_window;
     for i = I0:Iend
 %         head = max(i-half_window,I0);
@@ -38,10 +40,23 @@ Iend = voiced_segment(seg,2)-half_window;
         formants = formantsWindow(data_win,Fs,p);
 
         for f = 1:length(formants)
-        formants_all(i,f) = formants(f);
-        end
+        formants_all(i,f) = formants(f);       
+        end        
     end
+    
+
+end 
+
+
+%% formant smoothing
+formants_smoothed = zeros(size(formants_all));
+k = 5;  %half window size
+movingWindow = dsp.MovingAverage(2*k+1);
+
+for f = 1:3
+    formants_smoothed(:,f) = movingWindow(formants_all(:,f));
 end
+
 
 % formants_time = zeros(length(data),3);
 % for i=1:voiced_no
@@ -52,6 +67,8 @@ end
 %     end  
 % end
 
+
+%% plot
 figure;
 segmentlen = 100; %window size
 noverlap = 90; %overlapping size
