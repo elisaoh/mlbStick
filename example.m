@@ -46,11 +46,9 @@ for kk = 1:length(frqs)
         nn = nn+1;
     end
 end
+
 formants
 
-figure;
-scatter(formants(1),formants(2));
-text(1000,1400,'a');
 
 
 
