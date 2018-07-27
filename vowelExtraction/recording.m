@@ -1,4 +1,4 @@
-clear variables
+%clear variables
 % 
 % recObj = audiorecorder;
 % disp('Start speaking.');
@@ -10,8 +10,8 @@ clear variables
 % plot(y);
 
 %% for test
-load mtlb
-y = mtlb;
+% load mtlb
+% y = mtlb;
 
 %%
 voiced = vowelExtraction(y,Fs,100);

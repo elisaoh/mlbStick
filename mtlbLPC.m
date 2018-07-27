@@ -4,7 +4,7 @@ addpath('vowelExtraction')
 load('\\wcs-cifs\wc\smng\experiments\stroopVOT\acousticdata\sp008\neutralWord\data.mat')
 load('\\wcs-cifs\wc\smng\experiments\stroopVOT\acousticdata\sp008\neutralWord\expt.mat')
 
-idx = 2;
+idx = 1;
 word = expt.words(expt.allWords(idx));
 M = 4; %downsample factor
 y = downsample(data(idx).signalIn,M);
@@ -44,17 +44,17 @@ Iend = voiced_segment(seg,2)-half_window;
         range_min = [100,500,1000];
         range_max = [1500,3500,4500];
         for f = 1:3
-        for c = 1:length(formants)
-            if range_min(f)<formants(c)<range_max(f)
-                formants_all(i,f) = formants(f);
-            else
-                formants_all(i,f) = formants_all(i-1,f);
+            for c = 1:length(formants)
+                if range_min(f)<formants(c)<range_max(f)
+                    formants_all(i,f) = formants(f);
+                else
+                    formants_all(i,f) = formants_all(i-1,f);
+                end
+                
             end
-     
+            
         end
-       
     end
-    end    
 
 end 
 
@@ -91,7 +91,7 @@ formants_no = 3;
 for f = 1:formants_no
 %     subplot(3,1,f);
     time_line = (1:length(y)).*dt;
-    scatter(time_line,formants_all(:,f)./1e3,'.');
+    scatter(time_line,formants_smoothed(:,f)./1e3,'.');
     hold on
 %     xlabel("Time(ms)")
 %     ylabel(['Formant ', num2str(f)])

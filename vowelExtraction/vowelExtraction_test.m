@@ -49,9 +49,9 @@ ylabel("RMS")
 title(['Frame len: ',num2str(frame_len),' Lambda: ',num2str(lambda)])
 
 %% thresholding
-thres = 1;
+thres = 0.4;
 vowel_frame = zeros(frame_no,1);
-RMS_thres = mean(long_RMS)*thres;
+RMS_thres = max(long_RMS)*thres;
 vowel_frame(long_RMS>=RMS_thres) = 1;
 
 diff = zeros(frame_no,1);
@@ -90,9 +90,12 @@ end
 
 figure;
 time_line = (1:length(data)).*1e3*dt;
+plot(time_line,data);
+hold on
 plot(time_line,voiced_logic);
-axis([0 inf 0 1.5]);
+%axis([0 inf 0 1.5]);
 yticks([0 1]);
 yticklabels({'not vowel','vowel'});
 xlabel("Time(ms)")
 title("Vowel Detection")
+hold off

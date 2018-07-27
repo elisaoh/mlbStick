@@ -53,9 +53,9 @@ long_RMS(2:frame_no) = long_RMS_prev + long_RMS_curr;
 % title(['Frame len: ',num2str(frame_len),' Lambda: ',num2str(lambda)])
 
 %% thresholding
-thres = 1;
-vowel_frame = zeros(frame_no,1);
-RMS_thres = mean(long_RMS)*thres;
+thres = 0.4;
+vowel_frame= zeros(frame_no,1);
+RMS_thres = max(long_RMS)*thres;
 vowel_frame(long_RMS>=RMS_thres) = 1;
 
 diff = zeros(frame_no,1);

@@ -11,7 +11,7 @@ rang = 1e4;
 % 
 for c = 1:length(fc)
     for f = 1:length(fp)
-       M(c,f) = tran*(fc(c)-fp(f))^2;
+        M(c,f) = tran*(fc(c)-fp(f))^2;
     end
 end
 
